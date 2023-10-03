@@ -8,6 +8,7 @@ import { FadeInImage } from '../components/FadeInImage';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { RootStackParams } from '../navigator/Navigator';
 import { usePokemon } from '../hooks/usePokemon';
+import { PokemonDetails } from '../components/PokemonDetails';
 
 interface PokemonScreenProps extends StackScreenProps<RootStackParams, 'PokemonScreen'> {};
 
@@ -67,13 +68,18 @@ export const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
         />
       </View>
 
-      {/* Loader */}
-      <View style={ styles.loadingIndicator }>
-        <ActivityIndicator
-          color={ color }
-          size={ 50 }
-        />
-      </View>
+      {/* Loader & Details of pokemon */}
+      {
+        isLoading ?
+        (
+          <View style={ styles.loadingIndicator }>
+            <ActivityIndicator
+              color={ color }
+              size={ 50 }
+            />
+          </View>
+        ) : <PokemonDetails pokemon={ completePokemon } />
+      }
     </View>
   )
 };
