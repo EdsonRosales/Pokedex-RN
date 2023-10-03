@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import type { PokemonFull } from '../interfaces/pokemonInterfaces';
+import { FadeInImage } from './FadeInImage';
 
 type PokemonDetailsProps = {
   pokemon: PokemonFull;
@@ -11,19 +12,21 @@ type PokemonDetailsProps = {
 export const PokemonDetails = ({ pokemon }: PokemonDetailsProps) => {
   return (
     <ScrollView
+      showsVerticalScrollIndicator={ false }
       style={{
         ...StyleSheet.absoluteFillObject,
       }}
     >
-      {/* Types container */}
+      {/* Types & weight container */}
       <View
         style={{
           ...styles.container,
-          marginTop: 390
+          marginTop: 380
         }}
       >
+        {/* Types */}
         <Text style={ styles.title }>Types</Text>
-        <View style={{ flexDirection: 'row' }}>  
+        <View style={{ flexDirection: 'row' }}>
           {
             pokemon.types.map(({ type }) => (
               <Text 
@@ -38,16 +41,77 @@ export const PokemonDetails = ({ pokemon }: PokemonDetailsProps) => {
             ))
           }
         </View>
+
+        {/* Weight */}
+        <Text style={ styles.title }>Weight</Text>
+        <Text style={ styles.regularText }>{ pokemon.weight }lb</Text>
       </View>
 
       {/* Sprites Container */}
-      <View
-        style={{
-          ...styles.container,
-          marginTop: 20
-        }}
-      >
+      <View style={ styles.container }>
         <Text style={ styles.title }>Sprites</Text>
+      </View>
+
+      <ScrollView
+        horizontal={ true }
+        showsHorizontalScrollIndicator={ false }
+      >
+        <FadeInImage
+          uri={ pokemon.sprites.front_default }
+          style={ styles.basicSprite }
+        />
+        <FadeInImage
+          uri={ pokemon.sprites.back_default }
+          style={ styles.basicSprite }
+        />
+        <FadeInImage
+          uri={ pokemon.sprites.front_shiny }
+          style={ styles.basicSprite }
+        />
+        <FadeInImage
+          uri={ pokemon.sprites.back_shiny }
+          style={ styles.basicSprite }
+        />
+      </ScrollView>
+
+      {/* Skills Container */}
+      <View style={ styles.container }>
+        <Text style={ styles.title }>Base Skills</Text>
+        <View style={{ flexDirection: 'row' }}>
+          {
+            pokemon.abilities.map(({ ability }) => (
+              <Text 
+                key={ ability.name }
+                style={{
+                  ...styles.regularText,
+                  marginRight: 10
+                }}
+              >
+                { ability.name }
+              </Text>
+            ))
+          }
+        </View>
+      </View>
+
+      {/* Moves Container */}
+      <View style={ styles.container }>
+        <Text style={ styles.title }>Moves</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          {
+            pokemon.moves.map(({ move }) => (
+              <Text 
+                key={ move.name }
+                style={{
+                  ...styles.regularText,
+                  marginRight: 10
+                }}
+              >
+                { move.name }
+              </Text>
+            ))
+          }
+        </View>
       </View>
     </ScrollView>
   )
@@ -59,9 +123,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginTop: 20
   },
   regularText: {
     fontSize: 18,
+  },
+  basicSprite: {
+    width: 100,
+    height: 100
   }
 });
