@@ -12,6 +12,7 @@ import ImageColors from "react-native-image-colors";
 
 import { SimplePokemon } from '../interfaces/pokemonInterfaces';
 import { FadeInImage } from './FadeInImage';
+import { useNavigation } from '@react-navigation/native';
 
 type PokemonCardProps = {
   pokemon: SimplePokemon;
@@ -23,6 +24,8 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
 
   const [bgColor, setBgColor] = useState('grey');
   const isMounted = useRef(true);   // <--- Ref to know wheter the component is mounted or not
+  // Navigation
+  const navigation = useNavigation();
 
   // Effect to dispatch the action to change the background color of the Card component
   useEffect(() => {
@@ -55,6 +58,12 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
   return (
     <TouchableOpacity
       activeOpacity={ 0.7 }
+      onPress={
+        () => navigation.navigate('PokemonScreen', {
+          simplePokemon: pokemon,
+          color: bgColor
+        })
+      }
     >
       <View style={{
         ...styles.cardContainer,
