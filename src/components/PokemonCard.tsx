@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import ImageColors from "react-native-image-colors";
+
 import { SimplePokemon } from '../interfaces/pokemonInterfaces';
 import { FadeInImage } from './FadeInImage';
 
@@ -10,13 +13,39 @@ type PokemonCardProps = {
 const windowWidth = Dimensions.get('window').width;
 
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
+
+  const [bgColor, setBgColor] = useState('grey');
+
+  // Effect to dispatch the action to change the background color of the Card component
+  useEffect(() => {
+    // iOS -> Background
+    // Android -> Dominant
+    ImageColors.getColors(pokemon.picture, { fallback: 'grey', cache: true, key: pokemon.picture })
+      .then( colors => {
+        colors.platform === 'ios';
+        switch (colors.platform) {
+          case 'android':
+            setBgColor(colors.dominant || bgColor);
+            break;
+          case 'ios':
+            setBgColor(colors.background || bgColor);
+            break;
+          default:
+            setBgColor(bgColor);
+            break;
+        };
+      });
+  }, [])
+  
+
   return (
     <TouchableOpacity
       activeOpacity={ 0.7 }
     >
       <View style={{
         ...styles.cardContainer,
-        width: windowWidth * 0.4
+        width: windowWidth * 0.4,
+        backgroundColor: bgColor
       }}>
         {/* Pokemon's name */}
         <View>
@@ -50,7 +79,7 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 10,
-    backgroundColor: 'red',
+    // backgroundColor: 'grey',
     height: 120,
     width: 160,
     marginBottom: 25,
@@ -66,7 +95,7 @@ const styles = StyleSheet.create({
   },
   name: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     top: 20,
     left: 10
@@ -79,8 +108,8 @@ const styles = StyleSheet.create({
     bottom: -20
   },
   pokemonImage: {
-    width: 120,
-    height: 120,
+    width: 100,
+    height: 100,
     position: 'absolute',
     right: -8,
     bottom: -5
