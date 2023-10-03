@@ -4,7 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { usePokemonPaginated } from '../hooks/usePokemonPaginated';
 import { styles } from '../theme/appTheme';
-import { FadeInImage } from '../components/FadeInImage';
+import { PokemonCard } from '../components/PokemonCard';
 
 export const HomeScreen = () => {
 
@@ -22,14 +22,29 @@ export const HomeScreen = () => {
         data={ simplePokemonList }
         keyExtractor={ (pokemon) => pokemon.id }
         showsVerticalScrollIndicator={false}
-        renderItem={ ({ item, index }) => (
-          <FadeInImage
-            uri={ item.picture }
+        numColumns={ 2 }
+
+        // Header
+        ListHeaderComponent={(
+          <Text
             style={{
-              width: 100,
-              height: 100
+              ...styles.title,
+              ...styles.globalMargin,
+              top: top + 20,
+              marginBottom: top + 20
             }}
-          />
+          >Pokedex</Text>
+        )}
+
+        renderItem={ ({ item, index }) => (
+          <PokemonCard pokemon={ item } />
+          // <FadeInImage
+          //   uri={ item.picture }
+          //   style={{
+          //     width: 100,
+          //     height: 100
+          //   }}
+          // />
         )}
 
         // Infinite scroll
@@ -44,14 +59,6 @@ export const HomeScreen = () => {
           />
         )}
       />
-
-      {/* <Text
-        style={{
-          ...styles.title,
-          ...styles.globalMargin,
-          top: top + 20
-        }}
-      >Pokedex</Text> */}
     </>
   )
 };
