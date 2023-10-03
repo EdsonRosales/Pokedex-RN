@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react'
+import { 
+  Dimensions, 
+  Image, 
+  StyleSheet, 
+  Text, 
+  TouchableOpacity, 
+  View 
+} from 'react-native';
 
 import ImageColors from "react-native-image-colors";
 
@@ -15,6 +22,7 @@ const windowWidth = Dimensions.get('window').width;
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
 
   const [bgColor, setBgColor] = useState('grey');
+  const isMounted = useRef(true);   // <--- Ref to know wheter the component is mounted or not
 
   // Effect to dispatch the action to change the background color of the Card component
   useEffect(() => {
@@ -22,6 +30,8 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     // Android -> Dominant
     ImageColors.getColors(pokemon.picture, { fallback: 'grey', cache: true, key: pokemon.picture })
       .then( colors => {
+        if (!isMounted) return; // <--- Avoid changes to the state when the component isn't mounted
+
         colors.platform === 'ios';
         switch (colors.platform) {
           case 'android':
@@ -35,6 +45,10 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
             break;
         };
       });
+    
+    return () => {
+      isMounted.current = false;    // <--- Destroy the component & avoid memory leaks
+    }
   }, [])
   
 
