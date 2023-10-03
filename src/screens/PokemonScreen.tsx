@@ -20,7 +20,6 @@ export const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
 
   // Get the complete info of pokemons with the custom hook
   const { isLoading, pokemon: completePokemon } = usePokemon(id);
-  console.log(completePokemon);
 
   return (
     <View style={{ flex: 1 }}>
