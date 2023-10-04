@@ -55,4 +55,4 @@ npx react-native run-ios
 
 ## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
+Ahora debería poder verse el Pokedex ejecutandose en ambas plataformas. :partying_face:
