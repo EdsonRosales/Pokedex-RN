@@ -11,16 +11,17 @@ import Icon  from 'react-native-vector-icons/Ionicons';
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 
 type SearchInputProps = {
+  onDebounce: ( value: string ) => void;
   style?: StyleProp<ViewStyle>;
 }
 
-export const SearchInput = ({ style }: SearchInputProps) => {
+export const SearchInput = ({ style, onDebounce }: SearchInputProps) => {
 
   const [textValue, setTextValue] = useState('');
   const debouncedValue = useDebouncedValue( textValue );
 
   useEffect(() => {
-    console.log({debouncedValue});
+    onDebounce(debouncedValue); // <--- Call the function & pass the previous debounced value
   }, [debouncedValue])
   
 

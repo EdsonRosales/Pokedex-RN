@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   FlatList,
@@ -16,12 +16,31 @@ import { usePokemonSearch } from '../hooks/usePokemonSearch';
 
 import { styles } from "../theme/appTheme";
 
+import type { SimplePokemon } from '../interfaces/pokemonInterfaces';
+
 const screenWidth = Dimensions.get('window').width;
 
 export const SearchScreen = () => {
 
   const { top } = useSafeAreaInsets();
   const { isFetching, simplePokemonList } = usePokemonSearch();
+
+  const [filteredPokemons, setFilteredPokemons] = useState<SimplePokemon[]>([]); // <---- This is the list that shows in the Flatlist(screen) when the user made the debounced term on the input
+  const [term, setTerm] = useState(''); // <--- Search term (Keyword)
+
+  useEffect(() => {
+    if (term.length === 0) {
+      return setFilteredPokemons([]);
+    }
+
+    // Make the search filter by the given words
+    setFilteredPokemons(
+      simplePokemonList.filter(
+        pokemon => pokemon.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+      )
+    )
+  }, [term])
+  
 
   if (isFetching) return <Loading />;
 
@@ -33,6 +52,7 @@ export const SearchScreen = () => {
       }}
     >
       <SearchInput
+        onDebounce={ (value) => setTerm(value) }  // Do somehting when the user stops writing
         style={{
           position: 'absolute',
           zIndex: 999,
@@ -42,7 +62,7 @@ export const SearchScreen = () => {
       />
 
       <FlatList
-        data={ simplePokemonList }
+        data={ filteredPokemons }
         keyExtractor={ (pokemon) => pokemon.id }
         showsVerticalScrollIndicator={false}
         numColumns={ 2 }
@@ -55,7 +75,7 @@ export const SearchScreen = () => {
               paddingBottom: 10,
               marginTop: (Platform.OS === 'ios') ? top + 60 : top + 80
             }}
-          >Pokedex</Text>
+          >{term}</Text>
         )}
         renderItem={ ({ item }) => (
           <PokemonCard pokemon={ item } />
