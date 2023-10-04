@@ -26,7 +26,6 @@ export const HomeScreen = () => {
           keyExtractor={ (pokemon) => pokemon.id }
           showsVerticalScrollIndicator={false}
           numColumns={ 2 }
-
           // Header
           ListHeaderComponent={(
             <Text
@@ -39,22 +38,13 @@ export const HomeScreen = () => {
               }}
             >Pokedex</Text>
           )}
-
-          renderItem={ ({ item, index }) => (
+          renderItem={ ({ item }) => (
             <PokemonCard pokemon={ item } />
-            // <FadeInImage
-            //   uri={ item.picture }
-            //   style={{
-            //     width: 100,
-            //     height: 100
-            //   }}
-            // />
           )}
-
           // Infinite scroll
           onEndReached={ loadPokemons }
           onEndReachedThreshold={ 0.4 }
-
+          // Footer
           ListFooterComponent={( 
             <ActivityIndicator 
               style={{ height: 100 }}
