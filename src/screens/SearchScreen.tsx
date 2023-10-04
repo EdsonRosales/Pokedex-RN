@@ -41,8 +41,8 @@ export const SearchScreen = () => {
         )
       );
     } else {
-      const pokemonById = simplePokemonList.find(pokemon => pokemon.id === term);
       // If the term really is not a number, make another search type
+      const pokemonById = simplePokemonList.find(pokemon => pokemon.id === term);
       setFilteredPokemons(
         (pokemonById) ? [pokemonById] : []
       );

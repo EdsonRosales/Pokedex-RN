@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { FadeInImage } from '../components/FadeInImage';
 
 import type { StackScreenProps } from '@react-navigation/stack';
-import type { RootStackParams } from '../navigator/Navigator';
+import type { RootStackParams } from '../navigator/TabList';
 import { usePokemon } from '../hooks/usePokemon';
 import { PokemonDetails } from '../components/PokemonDetails';
 
