@@ -28,7 +28,6 @@ export const SearchInput = ({ style, onDebounce }: SearchInputProps) => {
   return (
     <View
     style={{
-      ...styles.container,
       ...style as any
     }}
     >
@@ -37,7 +36,7 @@ export const SearchInput = ({ style, onDebounce }: SearchInputProps) => {
           placeholder="Search Pokemon"
           style={{
             ...styles.textInput,
-            top: (Platform.OS === 'ios') ? 0 : 2
+            top: (Platform.OS === 'ios') ? 0 : 4
           }}
           autoCapitalize='none'
           autoCorrect={ false }
@@ -56,9 +55,6 @@ export const SearchInput = ({ style, onDebounce }: SearchInputProps) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: 'red'
-  },
   textBackground: {
     backgroundColor: '#F3F1F3',
     borderRadius: 50,
