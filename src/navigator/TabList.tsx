@@ -6,16 +6,16 @@ import { PokemonScreen } from '../screens/PokemonScreen';
 
 import type { SimplePokemon } from '../interfaces/pokemonInterfaces';
 
-export type RootStackParams = {
+export type RootStackParamList = {
   HomeScreen: undefined;
-  PokemonScreen: { simplePokemon: SimplePokemon, color: string }
+  PokemonScreen: { simplePokemon: SimplePokemon, color: string };
 }
 
-const Stack = createStackNavigator<RootStackParams>();
+const TabList = createStackNavigator<RootStackParamList>();
 
-export const TabList = () => {
+export const TabListScreen = () => {
   return (
-    <Stack.Navigator
+    <TabList.Navigator
       screenOptions={{
         headerShown: false,
         cardStyle: {
@@ -23,8 +23,8 @@ export const TabList = () => {
         }
       }}
     >
-      <Stack.Screen name="HomeScreen" component={ HomeScreen } />
-      <Stack.Screen name="PokemonScreen" component={ PokemonScreen } />
-    </Stack.Navigator>
+      <TabList.Screen name="HomeScreen" component={ HomeScreen } />
+      <TabList.Screen name="PokemonScreen" component={ PokemonScreen } />
+    </TabList.Navigator>
   );
 }

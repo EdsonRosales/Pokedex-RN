@@ -59,10 +59,10 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
     <TouchableOpacity
       activeOpacity={ 0.7 }
       onPress={
-        () => navigation.navigate('PokemonScreen', {
+        () => navigation.navigate('PokemonScreen' as never, {
           simplePokemon: pokemon,
           color: bgColor
-        })
+        } as never)
       }
     >
       <View style={{

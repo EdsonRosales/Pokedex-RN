@@ -1,11 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { RootStackParams } from "./TabList";
+import { RootStackParamList } from "./TabList";
 
 import { SearchScreen } from "../screens/SearchScreen";
 import { PokemonScreen } from "../screens/PokemonScreen";
 
-const TabSearch = createStackNavigator<RootStackParams>();
+const TabSearch = createStackNavigator<RootStackParamList>();
 
 export const TabSearchScreen = () => {
   return (

@@ -5,7 +5,6 @@ import { Tabs } from './src/navigator/Tabs';
 export const App = () => {
   return (
     <NavigationContainer>
-      {/* <Navigator /> */}
       <Tabs />
     </NavigationContainer>
   )
