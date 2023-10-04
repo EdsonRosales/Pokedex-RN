@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Dimensions,
   FlatList,
   Platform,
   Text,
@@ -13,7 +14,9 @@ import { Loading } from '../components/Loading';
 
 import { usePokemonSearch } from '../hooks/usePokemonSearch';
 
-import { styles as globalStyles } from "../theme/appTheme";
+import { styles } from "../theme/appTheme";
+
+const screenWidth = Dimensions.get('window').width;
 
 export const SearchScreen = () => {
 
@@ -26,11 +29,17 @@ export const SearchScreen = () => {
     <View
       style={{
         flex: 1,
-        marginTop: (Platform.OS === 'ios') ? top : top + 10,
         marginHorizontal: 20
       }}
     >
-      <SearchInput />
+      <SearchInput
+        style={{
+          position: 'absolute',
+          zIndex: 999,
+          width: screenWidth - 40,
+          top: (Platform.OS === 'ios') ? top : top + 20
+        }}
+      />
 
       <FlatList
         data={ simplePokemonList }
@@ -41,9 +50,10 @@ export const SearchScreen = () => {
         ListHeaderComponent={(
           <Text
             style={{
-              ...globalStyles.title,
-              ...globalStyles.globalMargin,
-              paddingBottom: 10
+              ...styles.title,
+              ...styles.globalMargin,
+              paddingBottom: 10,
+              marginTop: (Platform.OS === 'ios') ? top + 60 : top + 80
             }}
           >Pokedex</Text>
         )}
