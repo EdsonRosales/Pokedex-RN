@@ -30,7 +30,7 @@ export const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
       }}>
         {/* Go Back button */}
         <TouchableOpacity
-          onPress={ () => navigation.goBack() }
+          onPress={ () => navigation.pop() }
           activeOpacity={ 0.8 }
           style={{
             ...styles.goBackButton,

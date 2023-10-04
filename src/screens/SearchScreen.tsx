@@ -11,11 +11,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { SearchInput } from '../components/SearchInput';
 import { PokemonCard } from '../components/PokemonCard';
 import { Loading } from '../components/Loading';
-
 import { usePokemonSearch } from '../hooks/usePokemonSearch';
-
 import { styles } from "../theme/appTheme";
-
 import type { SimplePokemon } from '../interfaces/pokemonInterfaces';
 
 const screenWidth = Dimensions.get('window').width;
@@ -33,12 +30,24 @@ export const SearchScreen = () => {
       return setFilteredPokemons([]);
     }
 
-    // Make the search filter by the given words
-    setFilteredPokemons(
-      simplePokemonList.filter(
-        pokemon => pokemon.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
-      )
-    )
+    /**
+     * Validation to search by the Pokemon name or by his ID (#number)
+     */
+    if (isNaN(Number(term))) {
+      // Make the search filter by the given words
+      setFilteredPokemons(
+        simplePokemonList.filter(
+          pokemon => pokemon.name.toLocaleLowerCase().includes(term.toLocaleLowerCase())
+        )
+      );
+    } else {
+      const pokemonById = simplePokemonList.find(pokemon => pokemon.id === term);
+      // If the term really is not a number, make another search type
+      setFilteredPokemons(
+        (pokemonById) ? [pokemonById] : []
+      );
+    }
+
   }, [term])
   
 
