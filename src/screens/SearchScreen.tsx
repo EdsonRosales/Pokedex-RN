@@ -1,9 +1,7 @@
 import React from 'react';
-import { 
-  ActivityIndicator,
+import {
   FlatList,
   Platform,
-  StyleSheet,
   Text,
   View 
 } from 'react-native';
@@ -11,6 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SearchInput } from '../components/SearchInput';
 import { PokemonCard } from '../components/PokemonCard';
+import { Loading } from '../components/Loading';
 
 import { usePokemonSearch } from '../hooks/usePokemonSearch';
 
@@ -21,17 +20,7 @@ export const SearchScreen = () => {
   const { top } = useSafeAreaInsets();
   const { isFetching, simplePokemonList } = usePokemonSearch();
 
-  if(isFetching) {
-    return (
-      <View style={ styles.activityContainer }>
-        <ActivityIndicator
-          size={ 50 }
-          color="grey"
-        />
-        <Text>Loading...</Text>
-      </View>
-    )
-  }
+  if (isFetching) return <Loading />;
 
   return (
     <View
@@ -65,11 +54,3 @@ export const SearchScreen = () => {
     </View>
   )
 };
-
-const styles = StyleSheet.create({
-  activityContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
